@@ -1,0 +1,1031 @@
+{
+	"info": {
+		"_postman_id": "condominium-system-api",
+		"name": "Sistema de Condomínio - API Collection",
+		"description": "Collection completa com todos os endpoints dos 3 microserviços do Sistema de Condomínio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth & User Service (8001)",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "admin123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/auth/login",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "auth", "login"]
+								},
+								"description": "Autentica usuário e retorna token JWT"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Current User",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/auth/me",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "auth", "me"]
+								},
+								"description": "Retorna informações do usuário autenticado"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "List Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/users?skip=0&limit=10",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "users"],
+									"query": [
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								},
+								"description": "Lista todos os usuários com paginação"
+							},
+							"response": []
+						},
+						{
+							"name": "Get User by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/users/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "users", "1"]
+								},
+								"description": "Busca usuário por ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"joao.silva\",\n  \"email\": \"joao.silva@email.com\",\n  \"full_name\": \"João Silva\",\n  \"password\": \"senha123\",\n  \"group_id\": 2,\n  \"unit_id\": 101\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/users",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "users"]
+								},
+								"description": "Cria novo usuário"
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"joao.silva.novo@email.com\",\n  \"full_name\": \"João Silva Santos\",\n  \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/users/2",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "users", "2"]
+								},
+								"description": "Atualiza dados do usuário"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/users/2",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "users", "2"]
+								},
+								"description": "Remove usuário"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Groups",
+					"item": [
+						{
+							"name": "List Groups",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/groups",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "groups"]
+								},
+								"description": "Lista todos os grupos de usuários"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Group",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Porteiros\",\n  \"description\": \"Grupo de porteiros do condomínio\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/groups",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "groups"]
+								},
+								"description": "Cria novo grupo"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Units",
+					"item": [
+						{
+							"name": "List Units",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8001/api/units",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "units"]
+								},
+								"description": "Lista todas as unidades do condomínio"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Unit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"number\": \"102\",\n  \"block\": \"A\",\n  \"floor\": 1,\n  \"type\": \"Apartamento\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/units",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8001",
+									"path": ["api", "units"]
+								},
+								"description": "Cria nova unidade"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Management Service (8002)",
+			"item": [
+				{
+					"name": "Providers",
+					"item": [
+						{
+							"name": "List Providers",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/api/providers",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "providers"]
+								},
+								"description": "Lista todos os prestadores de serviço"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Provider",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Empresa de Limpeza XYZ\",\n  \"cnpj\": \"12.345.678/0001-90\",\n  \"contact\": \"(11) 98765-4321\",\n  \"email\": \"contato@limpezaxyz.com.br\",\n  \"service_type\": \"Limpeza\",\n  \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/providers",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "providers"]
+								},
+								"description": "Cadastra novo prestador"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Provider",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contact\": \"(11) 91234-5678\",\n  \"is_active\": false\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/providers/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "providers", "1"]
+								},
+								"description": "Atualiza prestador"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Employees",
+					"item": [
+						{
+							"name": "List Employees",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/api/employees",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "employees"]
+								},
+								"description": "Lista todos os funcionários"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Employee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Carlos Souza\",\n  \"cpf\": \"123.456.789-00\",\n  \"position\": \"Porteiro\",\n  \"hire_date\": \"2025-01-15\",\n  \"salary\": 2500.00,\n  \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/employees",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "employees"]
+								},
+								"description": "Cadastra novo funcionário"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Employee History",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/api/employees/1/history",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "employees", "1", "history"]
+								},
+								"description": "Retorna histórico de alterações do funcionário"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Patrimony",
+					"item": [
+						{
+							"name": "List Patrimony",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/api/patrimony",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "patrimony"]
+								},
+								"description": "Lista todo o patrimônio do condomínio"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Patrimony Item",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Gerador de Energia\",\n  \"description\": \"Gerador diesel 50kVA\",\n  \"category\": \"Equipamento\",\n  \"acquisition_date\": \"2024-06-10\",\n  \"value\": 25000.00,\n  \"location\": \"Subsolo\",\n  \"status\": \"Ativo\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/patrimony",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "patrimony"]
+								},
+								"description": "Cadastra novo item no patrimônio"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Patrimony History",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/api/patrimony/1/history",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8002",
+									"path": ["api", "patrimony", "1", "history"]
+								},
+								"description": "Retorna histórico de manutenções e alterações"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Operations Service (8003)",
+			"item": [
+				{
+					"name": "Schedulings",
+					"item": [
+						{
+							"name": "List Schedulings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/schedulings",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "schedulings"]
+								},
+								"description": "Lista todos os agendamentos de áreas comuns"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Scheduling",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"area_id\": 1,\n  \"user_id\": 2,\n  \"date\": \"2025-12-01\",\n  \"start_time\": \"14:00\",\n  \"end_time\": \"18:00\",\n  \"description\": \"Festa de aniversário\",\n  \"status\": \"Pendente\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/schedulings",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "schedulings"]
+								},
+								"description": "Cria novo agendamento"
+							},
+							"response": []
+						},
+						{
+							"name": "Approve Scheduling",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"Aprovado\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/schedulings/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "schedulings", "1"]
+								},
+								"description": "Aprova ou rejeita agendamento"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Areas",
+					"item": [
+						{
+							"name": "List Areas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/areas",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "areas"]
+								},
+								"description": "Lista todas as áreas comuns"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Area",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Quadra de Tênis\",\n  \"description\": \"Quadra coberta com iluminação\",\n  \"capacity\": 4,\n  \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/areas",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "areas"]
+								},
+								"description": "Cadastra nova área comum"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Visitors",
+					"item": [
+						{
+							"name": "List Visitors",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/visitors",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "visitors"]
+								},
+								"description": "Lista todos os visitantes registrados"
+							},
+							"response": []
+						},
+						{
+							"name": "Register Visitor",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Maria Santos\",\n  \"document\": \"987.654.321-00\",\n  \"unit_id\": 101,\n  \"entry_time\": \"2025-11-26T14:30:00\",\n  \"purpose\": \"Visita social\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/visitors",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "visitors"]
+								},
+								"description": "Registra entrada de visitante"
+							},
+							"response": []
+						},
+						{
+							"name": "Register Exit",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"exit_time\": \"2025-11-26T18:45:00\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/visitors/1/exit",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "visitors", "1", "exit"]
+								},
+								"description": "Registra saída do visitante"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notices",
+					"item": [
+						{
+							"name": "List Notices",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/notices",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "notices"]
+								},
+								"description": "Lista todos os avisos"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Notice",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Manutenção do Elevador\",\n  \"content\": \"Será realizada manutenção preventiva no elevador social no dia 05/12. Pedimos a compreensão de todos.\",\n  \"category\": \"Manutenção\",\n  \"priority\": \"Alta\",\n  \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/notices",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "notices"]
+								},
+								"description": "Cria novo aviso"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Notice History",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/notices/1/history",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "notices", "1", "history"]
+								},
+								"description": "Retorna histórico de edições do aviso"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Budgets",
+					"item": [
+						{
+							"name": "List Budgets",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/budgets",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "budgets"]
+								},
+								"description": "Lista todos os orçamentos"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Budget",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Serviço\",\n  \"description\": \"Pintura da fachada\",\n  \"provider_id\": 1,\n  \"value\": 15000.00,\n  \"status\": \"Pendente\",\n  \"request_date\": \"2025-11-26\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8003/api/budgets",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "budgets"]
+								},
+								"description": "Cria novo orçamento"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Logs & Audit",
+					"item": [
+						{
+							"name": "List Logs",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/logs?skip=0&limit=50",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "logs"],
+									"query": [
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "50"
+										}
+									]
+								},
+								"description": "Lista logs de ações do sistema"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Audit Report",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8003/api/audit?start_date=2025-11-01&end_date=2025-11-30",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8003",
+									"path": ["api", "audit"],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2025-11-01"
+										},
+										{
+											"key": "end_date",
+											"value": "2025-11-30"
+										}
+									]
+								},
+								"description": "Gera relatório de auditoria por período"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
